@@ -18,9 +18,16 @@ class PageHandler {
     //nav links listener
     this.navLinks.forEach(function(link) {
       link.addEventListener("click", function() {
-        
-    	});
-	  });
+        this.changePage(link.value);
+    	}.bind(this));
+	  }.bind(this));
+  }
+
+  changePage(targetPage) {
+    if (targetPage != this.currentPage) {
+      //do the animations here
+      
+    }
   }
 
 }
