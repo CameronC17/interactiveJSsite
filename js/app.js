@@ -1,6 +1,15 @@
 class PageHandler {
   constructor() {
     this.currentPage = 1;
+    this.apiKey = "3b349a97-a0af-45e4-8c7c-bfdb951fb97b";
+
+    this.opts = {
+      method: 'GET',
+      body: 'json',
+      headers: {}
+    };
+
+
     this.getElements();
     this.addEventListeners();
   }
@@ -29,7 +38,9 @@ class PageHandler {
     //user text input listener
     this.userSubmit.onclick = function(event) {
       event.preventDefault();
-      console.log("toot toot");
+      //console.log("toot toot");
+      this.sendGetRequest();
+
     }.bind(this);
 
     //subreddit text input
@@ -80,7 +91,24 @@ class PageHandler {
   }
 
   sendGetRequest() {
+    var xmlhttp = new XMLHttpRequest();
 
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+           if (xmlhttp.status == 200) {
+               console.log(xmlhttp.responseText);
+           }
+           else if (xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
+
+    xmlhttp.open("GET", "https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/CaptainCam?api_key=3b349a97-a0af-45e4-8c7c-bfdb951fb97b", true);
+    xmlhttp.send();
     //return something
   }
 
