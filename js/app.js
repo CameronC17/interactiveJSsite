@@ -1,14 +1,8 @@
 class PageHandler {
   constructor() {
     this.currentPage = 1;
-    this.apiKey = "3b349a97-a0af-45e4-8c7c-bfdb951fb97b";
-
-    this.opts = {
-      method: 'GET',
-      body: 'json',
-      headers: {}
-    };
-
+    this.apiKey = "your key";
+    this.userData = [];
 
     this.getElements();
     this.addEventListeners();
@@ -17,10 +11,11 @@ class PageHandler {
   getElements() {
     this.navLinks = Array.from(document.getElementsByClassName("navLink"));
     this.userSubmit = document.getElementById("userSubmit");
-		this.subredditSubmit = document.getElementById("subredditSubmit");
+
+    this.userInput = document.getElementById("username");
 
     this.userOutput = document.getElementById("userContent");
-		this.subredditOutput = document.getElementById("subredditContent");
+		this.statsOutput = document.getElementById("statsContent");
 
     this.homepage = document.getElementById("page1");
     this.userpage = document.getElementById("page2");
@@ -38,16 +33,8 @@ class PageHandler {
     //user text input listener
     this.userSubmit.onclick = function(event) {
       event.preventDefault();
-      //console.log("toot toot");
-      this.sendGetRequest();
-
+      this.sendUserRequest("https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/" + this.userInput.value + "?api_key=" + this.apiKey);
     }.bind(this);
-
-    //subreddit text input
-    this.subredditSubmit.onclick = function(event) {
-      event.preventDefault();
-      console.log("pop pop");
-    }
   }
 
   changePage(targetPage) {
@@ -90,13 +77,18 @@ class PageHandler {
     }
   }
 
-  sendGetRequest() {
-    var xmlhttp = new XMLHttpRequest();
+  displayUserData(userData) {
+    console.log(this.userData[0][0]);
+  }
 
+  sendUserRequest(connString) {
+    var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE) {
            if (xmlhttp.status == 200) {
-               console.log(xmlhttp.responseText);
+               this.userData[0] = JSON.parse(xmlhttp.responseText);
+               //do the match list string on this line
+               this.displayUserData();
            }
            else if (xmlhttp.status == 400) {
               alert('There was an error 400');
@@ -105,15 +97,35 @@ class PageHandler {
                alert('something else other than 200 was returned');
            }
         }
-    };
-
-    xmlhttp.open("GET", "https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/CaptainCam?api_key=3b349a97-a0af-45e4-8c7c-bfdb951fb97b", true);
+    }.bind(this);
+    xmlhttp.open("GET", connString, true);
     xmlhttp.send();
-    //return something
+  }
+
+  sendMatchRequest(connString) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+           if (xmlhttp.status == 200) {
+
+
+           }
+           else if (xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    }.bind(this);
+    xmlhttp.open("GET", connString, true);
+    xmlhttp.send();
   }
 
 }
 
+
+//and the beginning of the page......
 
 window.onload = function() {
   var content = new PageHandler();
