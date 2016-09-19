@@ -47,5 +47,7 @@ body {
     display: none; }
   body #page3 {
     display: none; }
+  body #userContent {
+    text-align: left; }
 
 /*# sourceMappingURL=style.css.map */

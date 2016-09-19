@@ -33,7 +33,7 @@ class PageHandler {
     //user text input listener
     this.userSubmit.onclick = function(event) {
       event.preventDefault();
-      this.sendUserRequest("https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/" + this.userInput.value + "?api_key=" + this.apiKey);
+      this.sendGETRequest("https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/" + this.userInput.value + "?api_key=" + this.apiKey, this.sendGETRequest);
     }.bind(this);
   }
 
@@ -78,37 +78,43 @@ class PageHandler {
   }
 
   displayUserData(userData) {
-    console.log(this.userData[0][0]);
+    console.log("DONE!");
+    var name = this.userInput.value;
+
+    console.log(this.userData[0].captaincam);
+    var userString = "";
+    //                                              \/
+    userString += "Name: " + this.userData[0].captaincam.name + "\n";
+    userString += "ID: " + this.userData[0].captaincam.id + "\n";
+    userString += "Level: " + this.userData[0].captaincam.summonerLevel + "\n";
+    var date = new Date(this.userData[0].captaincam.revisionDate);
+    var newDate = " " + date.getDay() + "/" + date.getMonth() + "/" + date.getYear();
+    userString += "Created on: " + newDate;
+
+    this.userOutput.innerText = userString;
+    //console.log(this.userData[0]);
+    //console.log(this.userData[1]);
+    var statsString = "";
+    statsString += "Your Match Stats\n";
+    statsString += "You have played: " + this.userData[1].matches.length + " games since Season 3."
+
+    this.statsOutput.innerText = statsString;
   }
 
-  sendUserRequest(connString) {
+  sendGETRequest(connString, callback, object) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {
            if (xmlhttp.status == 200) {
+             if (callback != null) {
                this.userData[0] = JSON.parse(xmlhttp.responseText);
-               //do the match list string on this line
-               this.displayUserData();
-           }
-           else if (xmlhttp.status == 400) {
-              alert('There was an error 400');
-           }
-           else {
-               alert('something else other than 200 was returned');
-           }
-        }
-    }.bind(this);
-    xmlhttp.open("GET", connString, true);
-    xmlhttp.send();
-  }
-
-  sendMatchRequest(connString) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-           if (xmlhttp.status == 200) {
-
-
+               var summonerID = "35786647";
+               //                                                                         \/  change this id!
+               callback("https://euw.api.pvp.net/api/lol/euw/v2.2/matchlist/by-summoner/35786647?api_key=3b349a97-a0af-45e4-8c7c-bfdb951fb97b", null, this);
+            } else {
+               object.userData[1] = JSON.parse(xmlhttp.responseText);
+               object.displayUserData();
+             }
            }
            else if (xmlhttp.status == 400) {
               alert('There was an error 400');
