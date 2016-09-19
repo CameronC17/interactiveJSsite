@@ -1,7 +1,7 @@
 class PageHandler {
   constructor() {
     this.currentPage = 1;
-    this.apiKey = "your key";
+    this.apiKey = "YOUR_KEY_HERE";
     this.userData = [];
 
     this.getElements();
@@ -39,42 +39,76 @@ class PageHandler {
 
   changePage(targetPage) {
     if (targetPage != this.currentPage) {
-      //do the animations here
-      //hide the current page we're on
-      switch (this.currentPage) {
+      var fadeInElement = null;
+
+      switch (targetPage) {
         case 1:
-          this.homepage.style.display = 'none';
+          fadeInElement = this.homepage;
           break;
         case 2:
-          this.userpage.style.display = 'none';
+          fadeInElement = this.userpage;
           break;
         case 3:
-          this.subpage.style.display = 'none';
+          fadeInElement = this.subpage;
+          break;
+        default:
+          console.log("unknown page to show");
+          break;
+      }
+
+      //do the animations here
+      //hide the current page we're on, then show the next one
+      switch (this.currentPage) {
+        case 1:
+          this.fadeOut(this.homepage, fadeInElement);
+          break;
+        case 2:
+          this.fadeOut(this.userpage, fadeInElement);
+          break;
+        case 3:
+          this.fadeOut(this.subpage, fadeInElement);
           break;
         default:
           console.log("unknown page to hide");
           break;
       }
 
-      //change the page to target page
       this.currentPage = targetPage;
-
-      //now we show the target page
-      switch (this.currentPage) {
-        case 1:
-          this.homepage.style.display = 'inline-block';
-          break;
-        case 2:
-          this.userpage.style.display = 'inline-block';
-          break;
-        case 3:
-          this.subpage.style.display = 'inline-block';
-          break;
-        default:
-          console.log("unknown page to show");
-          break;
-      }
     }
+  }
+
+  fadeOut(element, fadeInElement) {
+    var object = this;
+    var op = 1;
+    function fadeIt() {
+      element.style.opacity = op;
+      op -= 0.05;
+    	if (op > 0) {
+    		setTimeout(function () {
+    			fadeIt();
+        }, 50);
+    	}
+      else {
+        element.style.display = 'none';
+        object.fadeIn(fadeInElement);
+      }
+    };
+    fadeIt();
+  }
+
+  fadeIn(element) {
+    element.style.display = 'inline-block';
+    var op = 0;
+    function fadeIt() {
+      element.style.opacity = op;
+      op += 0.05;
+    	if (op < 1) {
+    		setTimeout(function () {
+    			fadeIt();
+        }, 50);
+    	}
+    };
+    fadeIt();
   }
 
   displayUserData(userData) {
