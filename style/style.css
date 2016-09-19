@@ -3,12 +3,10 @@ body {
   background-color: #b3e6ff;
   font-family: 'Josefin Sans', sans-serif; }
   body #headerbar {
-    background-color: purple;
     width: 100%;
     padding: 20px;
     margin-bottom: 30px; }
     body #headerbar #logo {
-      background-color: green;
       display: block;
       width: 100%;
       text-align: center; }
@@ -17,7 +15,6 @@ body {
         font-size: 5em; }
     body #headerbar #links {
       width: 100%;
-      background-color: yellow;
       font-size: 2em; }
       body #headerbar #links ul {
         width: 100%;
@@ -35,6 +32,7 @@ body {
     margin: 0 auto;
     padding: 15px;
     display: inline-block;
+    border-radius: 4px;
     background-color: blue;
     color: white; }
     body .page h2 {

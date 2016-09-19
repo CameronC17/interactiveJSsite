@@ -78,10 +78,9 @@ class PageHandler {
   }
 
   displayUserData(userData) {
-    console.log("DONE!");
     var name = this.userInput.value;
 
-    console.log(this.userData[0].captaincam);
+    //console.log(this.userData[0].captaincam);
     var userString = "";
     //                                              \/
     userString += "Name: " + this.userData[0].captaincam.name + "\n";
@@ -110,7 +109,7 @@ class PageHandler {
                this.userData[0] = JSON.parse(xmlhttp.responseText);
                var summonerID = "35786647";
                //                                                                         \/  change this id!
-               callback("https://euw.api.pvp.net/api/lol/euw/v2.2/matchlist/by-summoner/35786647?api_key=3b349a97-a0af-45e4-8c7c-bfdb951fb97b", null, this);
+               callback("https://euw.api.pvp.net/api/lol/euw/v2.2/matchlist/by-summoner/" + summonerID + "?api_key=" + this.apiKey, null, this);
             } else {
                object.userData[1] = JSON.parse(xmlhttp.responseText);
                object.displayUserData();

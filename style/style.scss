@@ -5,13 +5,13 @@ body {
   font-family: 'Josefin Sans', sans-serif;
 
     #headerbar {
-      background-color: purple;
+      //background-color: purple;
       width: 100%;
       padding: 20px;
       margin-bottom: 30px;
 
       #logo {
-        background-color: green;
+        //background-color: green;
         display: block;
         width: 100%;
         text-align: center;
@@ -25,7 +25,7 @@ body {
 
       #links {
         width: 100%;
-        background-color: yellow;
+        //background-color: yellow;
         font-size: 2em;
 
         ul {
@@ -54,6 +54,8 @@ body {
 
       //position: absolute;
       display: inline-block;
+
+      border-radius: 4px;
 
       background-color: blue;
       color: white;
