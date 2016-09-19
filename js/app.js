@@ -1,6 +1,8 @@
 class PageHandler {
   constructor() {
     this.currentPage = 1;
+    //youll need to add a key here for it to work. get a key here from:
+    //  https://developer.riotgames.com/
     this.apiKey = "YOUR_KEY_HERE";
     this.userData = [];
 
